@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>IRPF</title>
+    <link rel="stylesheet" href="/public/css/bootstrap.css">
+</head>
+<body>
+
+    <div class="container-sm">
+        <nav class="navbar bg-body-tertiary">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">IPRF - Imposto de Renda Retido na Fonte</a>
+            </div>
+        </nav>
+
+        <fieldset class="bg-body-secondary p-3">
+            <legend>DADOS DE SALÁRIO</legend>
+            <div class="row">
+                <div class="col-sm">
+                    <label>SALÁRIO BRUTO</label>
+                    <input type="text" id="salariobruto" class="form-control">
+                </div>
+                <div class="col-sm">
+                    <label>PREVIDÊNCIA</label>
+                    <input type="text" id="previdencia" class="form-control">
+                </div>
+                <div class="col-sm">
+                    <label>FUNPRESP</label>
+                    <input type="text" id="funpresp" class="form-control">
+                </div>
+
+                <div class="col-sm">
+                    <label>AUXILIO SAÚDE</label>
+                    <input type="text" id="saude" class="form-control">
+                </div>
+
+                <div class="col-sm">
+                    <label>AUXILIO ALIMENTAÇÃO</label>
+                    <input type="text" id="alimentacao" class="form-control">
+                </div>
+            </div>
+            <button class="btn btn-success mt-3" onclick="calcular()">CALCULAR</button>
+        </fieldset>
+
+        <div class="mt-3 p-3" id="resultado">
+            <h5 class="text-center">DESCONTOS</h5>
+            <table class="table table-striped w-50 mx-auto">
+                <tr>
+                    <td>IMPOSTO DE RENDA</td>
+                    <td id="iprf"></td>
+                </tr>
+                <tr>
+                    <td>PREVIDÊNCIA</td>
+                    <td id="prev"></td>
+                </tr>
+                <tr>
+                    <td>FUNPRESP</td>
+                    <td id="funp"></td>
+                </tr>
+                <tr>
+                    <td><strong>TOTAL DESCONTOS</strong></td>
+                    <td id="tdesconto"></td>
+                </tr>
+            </table>
+
+            <h5 class="text-center">SALÁRIO LÍQUIDO</h5>
+            <table class="table table-striped w-50 mx-auto">
+                <tr>
+                    <td>SALÁRIO LÍQUIDO</td>
+                    <td id="liquido"></td>
+                </tr>
+                <tr>
+                    <td>AUXÍLIOS</td>
+                    <td id="auxilios"></td>
+                </tr>
+
+                <tr>
+                    <td><strong>SALÁRIO LÍQUIDO FINAL</strong></td>
+                    <td id="lfinal"></td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+
+<script src="/public/js/irpf.js"></script>
+</body>
+</html>
