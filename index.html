@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>IRPF</title>
-    <link rel="stylesheet" href="/public/css/bootstrap.css">
+    <link rel="stylesheet" href="./public/css/bootstrap.css">
 </head>
 <body>
 
@@ -19,48 +19,66 @@
             <div class="row">
                 <div class="col-sm">
                     <label>SALÁRIO BRUTO</label>
-                    <input type="text" id="salariobruto" class="form-control">
-                </div>
-                <div class="col-sm">
-                    <label>PREVIDÊNCIA</label>
-                    <input type="text" id="previdencia" class="form-control">
-                </div>
-                <div class="col-sm">
-                    <label>FUNPRESP</label>
-                    <input type="text" id="funpresp" class="form-control">
+                    <input value="13911.67" type="text" id="salariobruto" class="form-control">
                 </div>
 
                 <div class="col-sm">
                     <label>AUXILIO SAÚDE</label>
-                    <input type="text" id="saude" class="form-control">
+                    <input value="155.02" type="text" id="saude" class="form-control">
                 </div>
 
                 <div class="col-sm">
                     <label>AUXILIO ALIMENTAÇÃO</label>
-                    <input type="text" id="alimentacao" class="form-control">
+                    <input value="1000" type="text" id="alimentacao" class="form-control">
+                </div>
+
+                <div class="col-sm">
+                    <label>OUTROS (FCC, FG, CD)</label>
+                    <input value="1071.67" type="text" id="outros" class="form-control">
                 </div>
             </div>
-            <button class="btn btn-success mt-3" onclick="calcular()">CALCULAR</button>
+            <div>
+                <input id="participa" type="checkbox" class="form-check-inline my-3"> Participa da Funpresp
+            </div>
+            <button class="btn btn-success mt-3" onclick="rodar()">CALCULAR</button>
         </fieldset>
+
+        <div class="mt-3 p-3" id="resumo">
+            <h5 class="text-center">SALÁRIO BRUTO</h5>
+            <table class="table table-striped w-50 mx-auto">
+                <tr>
+                    <td>SALÁRIO BRUTO</td>
+                    <td id="resumo_bruto" class="text-primary"></td>
+                </tr>
+                <tr>
+                    <td>TOTAL EXTRA</td>
+                    <td id="resumo_extra" class="text-primary"></td>
+                </tr>
+                <tr>
+                    <td>TOTAL BRUTO</td>
+                    <td id="total_bruto" class="text-primary"></td>
+                </tr>
+            </table>
+        </div>
 
         <div class="mt-3 p-3" id="resultado">
             <h5 class="text-center">DESCONTOS</h5>
             <table class="table table-striped w-50 mx-auto">
                 <tr>
                     <td>IMPOSTO DE RENDA</td>
-                    <td id="iprf"></td>
+                    <td id="iprf" class="text-danger"></td>
                 </tr>
                 <tr>
                     <td>PREVIDÊNCIA</td>
-                    <td id="prev"></td>
+                    <td id="prev" class="text-danger"></td>
                 </tr>
                 <tr>
                     <td>FUNPRESP</td>
-                    <td id="funp"></td>
+                    <td id="funp" class="text-danger"></td>
                 </tr>
                 <tr>
                     <td><strong>TOTAL DESCONTOS</strong></td>
-                    <td id="tdesconto"></td>
+                    <td id="tdesconto" class="text-danger fw-bolder"></td>
                 </tr>
             </table>
 
@@ -68,22 +86,22 @@
             <table class="table table-striped w-50 mx-auto">
                 <tr>
                     <td>SALÁRIO LÍQUIDO</td>
-                    <td id="liquido"></td>
+                    <td id="liquido" class="text-success"></td>
                 </tr>
                 <tr>
                     <td>AUXÍLIOS</td>
-                    <td id="auxilios"></td>
+                    <td id="auxilios" class="text-success fw-bolder"></td>
                 </tr>
 
                 <tr>
                     <td><strong>SALÁRIO LÍQUIDO FINAL</strong></td>
-                    <td id="lfinal"></td>
+                    <td id="lfinal" class="text-success fw-bolder"></td>
                 </tr>
             </table>
         </div>
 
     </div>
 
-<script src="/public/js/irpf.js"></script>
+<script src="./public/js/irpf.js"></script>
 </body>
 </html>

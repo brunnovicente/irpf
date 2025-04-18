@@ -1,42 +1,87 @@
-var bruto = document.getElementById("salariobruto")
-var previdencia = document.getElementById("previdencia")
-var funpresp = document.getElementById("funpresp")
-var auxiliosaude = document.getElementById("saude")
-var auxilioalimento = document.getElementById("alimentacao")
+const DESCONTO =  564.80
+const TETO = 8157.41
+const SALARIO_MINIMO = 1518
+
+function iprf(salario){
+    if(salario <= 2259.20){
+        return 0
+    }else if(salario <= 2826.65){
+        return salario * 0.075 - 169.44
+    }else if(salario <= 3751.05){
+        return salario * 0.15 - 381.44
+    }else if(salario <= 4664.68){
+        return salario * 0.225 - 662.77
+    }else{
+        return salario * 0.275 - 896
+    }
+}
+
+function imposto_renda(salario, deducoes){
+    if(deducoes >= DESCONTO){
+        return iprf(salario - deducoes)
+    }else{
+        return iprf(salario - DESCONTO)
+    }
+}
+
+function calcular_previdencia(salario){
+    if(salario <= SALARIO_MINIMO){
+        return salario * 0.075
+    }else if(salario <= 2793.88){
+        return (salario * 0.09) - 22.77
+    }else if(salario <= 4190.83){
+        return (salario * 0.12) - 106.59
+    }else if(salario <= TETO){
+        return (salario * 0.14) - 190.4
+    }else{
+        return (TETO * 0.14) - 190.4
+    }
+}
 
 
 
-function imposto(salario) {
-    // Tabela IRRF (2025)
-    const faixasIRRF = [
-        { limite: 2112.00, aliquota: 0.0, deducao: 0.0 },       // Isento
-        { limite: 2826.65, aliquota: 0.075, deducao: 158.40 },  // 7,5%
-        { limite: 3751.05, aliquota: 0.15, deducao: 370.40 },   // 15%
-        { limite: 4664.68, aliquota: 0.225, deducao: 651.73 },  // 22,5%
-        { limite: Infinity, aliquota: 0.275, deducao: 884.96 }, // 27,5%
-    ];
+function rodar(){
+    let participa = document.getElementById('participa')
+    let salario_bruto = Number(document.getElementById('salariobruto').value)
+    let saude = Number(document.getElementById('saude').value)
+    let alimentacao = Number(document.getElementById('alimentacao').value)
+    let outros = Number(document.getElementById('outros').value)
 
-    // Cálculo do IRRF
-    let impostoIRRF = 0;
-    for (let faixa of faixasIRRF) {
-        if (salario <= faixa.limite) {
-            impostoIRRF = (salario * faixa.aliquota) - faixa.deducao;
-            break;
+
+    let previdencia = calcular_previdencia(salario_bruto)
+    console.log('Previdencia: '+ previdencia)
+    let funpresp = 0
+
+    if(participa.checked){
+        if((salario_bruto > TETO)){
+            funpresp = (salario_bruto - TETO) * 0.085
         }
     }
 
-    // Garante que o imposto não seja negativo
-    return Math.max(impostoIRRF, 0).toFixed(2);
+    let deducoes = previdencia + funpresp
+    console.log('Deduções: '+deducoes)
+    let iprf = imposto_renda(salario_bruto + outros, deducoes)
+    let total_desconto = iprf + deducoes
+    let liquido = (salario_bruto + outros) - total_desconto
+    let auxilios = alimentacao + saude
+    let liquido_final = liquido + auxilios
+
+    document.getElementById('resumo_bruto').innerText = 'R$ '+(salario_bruto + outros).toFixed(2)
+    document.getElementById('resumo_extra').innerText = 'R$ '+auxilios.toFixed(2)
+    document.getElementById('total_bruto').innerText = 'R$ '+(salario_bruto + outros + auxilios).toFixed(2)
+
+    document.getElementById('iprf').innerText = 'R$ '+iprf.toFixed(2)
+    document.getElementById('prev').innerText = 'R$ '+previdencia.toFixed(2)
+    document.getElementById('funp').innerText = 'R$ '+funpresp.toFixed(2)
+    document.getElementById('tdesconto').innerText = 'R$ '+total_desconto.toFixed(2)
+
+    document.getElementById('auxilios').innerText = 'R$ '+auxilios.toFixed(2)
+    document.getElementById('liquido').innerText = 'R$ '+liquido.toFixed(2)
+    document.getElementById('lfinal').innerText = 'R$ '+liquido_final.toFixed(2)
+
+
+
 }
 
-function calcular(){
-    var base = parseFloat(bruto.value) - (parseFloat(previdencia.value) + parseFloat(funpresp.value))
-    var iprf = imposto(base)
-    var totalPrev = parseFloat(previdencia.value) + parseFloat(funpresp.value)
-    var liquido = base - iprf
-
-    document.getElementById("liquido").innerHTML = liquido.toString()
-    document.getElementById("iprf").innerHTML = iprf.toString()
-}
 
 
